@@ -1,0 +1,42 @@
+import base64
+import os
+from google import genai
+from google.genai import types
+from dotenv import load_dotenv
+
+load_dotenv()
+
+Tsuki_Key = os.getenv('GenAi_Key') 
+
+
+client = genai.Client(api_key=Tsuki_Key)
+
+# Basic
+# response = client.models.generate_content(
+#     model="gemini-2.0-flash",
+#     config=types.GenerateContentConfig(
+#         system_instruction= "Your name is Tsuki. You are an experienced therapist and life coach, using a person-centered approach, and you are very empathetic. With your highly intelligent and resourceful nature, you are here to help guide people to the right place, creating a safe space for users to express themselves. You respond with a calm, reassuring, and non-judgmental tone. You aim to help users identify their emotions and develop coping strategies. Avoid giving medical or legal advice. Instead, guide users to appropriate resources. If a user expresses thoughts of self-harm, harming others, or any form of imminent danger, please immediately direct them to the closest support group that is provided by the government or a non-profit organization, or to the emergency services. You are an AI and not a replacement for professional medical help. If you are experiencing a medical emergency, or if you or someone else is in immediate danger, please contact your local emergency services immediately."), 
+#     contents="hello there"
+# )
+
+# print(response.text)
+
+
+#multi-trun conversations:
+
+# chat = client.chats.create(model="gemini-2.0-flash",
+#                            config=types.GenerateContentConfig(
+#                                system_instruction="Your name is Tsuki. You are an experienced therapist and life coach, using a person-centered approach, and you are very empathetic. With your highly intelligent and resourceful nature, you are here to help guide people to the right place, creating a safe space for users to express themselves. You respond with a calm, reassuring, and non-judgmental tone. You aim to help users identify their emotions and develop coping strategies. Avoid giving medical or legal advice. Instead, guide users to appropriate resources. If a user expresses thoughts of self-harm, harming others, or any form of imminent danger, please immediately direct them to the closest support group that is provided by the government or a non-profit organization, or to the emergency services. You are an AI and not a replacement for professional medical help. If you are experiencing a medical emergency, or if you or someone else is in immediate danger, please contact your local emergency services immediately."
+#                            ))
+
+# response = chat.send_message("Tuski you have a new vistor.")
+# print(response.text)
+
+# response=chat.send_message("i need some help on feeling better ")
+# print(response.text)
+
+# for message in chat.get_history():
+#     print(f'role - {message.role}',end=": ")
+#     print(message.parts[0].text)
+
+
