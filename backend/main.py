@@ -1,14 +1,17 @@
+#creatr read update dleate CRUD
+#name & email 
+
+
 import base64
 import os
 from google import genai
-from google.genai import types
-from dotenv import load_dotenv
+from google.genai import types 
+from dotenv import load_dotenv 
 
 load_dotenv()
 tsuki_key = os.getenv('GenAi_Key')
 
 client = genai.Client(api_key = tsuki_key)
-
 
 
 model_ID = "gemini-2.0-flash"
@@ -30,7 +33,7 @@ while True:
     print()
     response = chat.send_message(prompt)
 
-    if prompt.lower() in ["Bye Tsuki"]:
+    if prompt.lower() in ["Bye"]:
         break
             
     model_response = response.text
