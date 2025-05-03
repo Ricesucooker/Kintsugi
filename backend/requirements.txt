@@ -1,0 +1,3 @@
+dotEnv [ secure env ] 
+google-auth
+google-genanai

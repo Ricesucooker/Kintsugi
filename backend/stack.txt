@@ -1,4 +1,0 @@
-#packages 
-Flask
-flask-cors - For cross orgion  
-flask-SQLAlchemy - object relational mapping (ORM)
