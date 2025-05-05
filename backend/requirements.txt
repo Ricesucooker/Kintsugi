@@ -1,3 +1,6 @@
+#pip install 
+
 dotEnv [ secure env ] 
 google-auth
-google-genanai
+- may need to migrate to Gunicorn + unicorn worker or Daphne depends on how the app grows
+pydantic - data validation library
