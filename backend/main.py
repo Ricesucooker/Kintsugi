@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 tsuki_key = os.getenv('GenAi_Key')
 
-client = genai.Client(api_key = tsuki_key)
-
 class TsukiChatbot:
     def __init__(self, api_key, model_id, system_prompt):
         self.client = genai.Client(api_key=api_key)
@@ -42,5 +40,5 @@ if __name__=="__main__":
         if prompt.lower() in ["bye"]:
             break
         response = tsuki.send_message(prompt)
-        print(f"Tsuki:{response}")
+        print(f"Tsuki: {response}")
         print()
