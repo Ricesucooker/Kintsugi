@@ -1,0 +1,68 @@
+import React, {useEffect, useState}  from 'react'
+import api from '../api.js';
+
+
+function Message({ sender, text}){
+    const messageClass = sender =='user' ? 'user-message': 'other-message';
+    return(
+        <div className={`message ${messageClass}`}>
+            <div className='sender'>{sender === 'user'? 'You' : sender}</div>
+            <div className='text'>{text}</div>
+        </div>
+    );
+}
+
+function Chat() {
+
+    const [messages, setMessages] = React.useState([
+        { sender: 'Bot', text: 'Welcome to the chat!' },
+        { sender: 'user', text: 'Hello!' }
+    ]);
+    const [newMessage, setNewMessage] = React.useState('');
+
+    const handleSendMessage = () => {
+        if (newMessage.trim()) {
+            setMessages([...messages, { sender: 'user', text: newMessage }]);
+            setNewMessage('');
+            setTimeout(() => {
+                setMessages([...messages, { sender: 'user', text: newMessage }, { sender: 'Bot', text: `You said: ${newMessage}` }]);
+            }, 500);
+        }
+    };
+
+    const handleInputChange = (event) => {
+        setNewMessage(event.target.value);
+    };
+
+
+  return (
+    <div className='chat-container'>
+        <div className='Message-container'>
+            <img src='#' alt='Avatar'></img>
+            <p>will contail history message here container right</p>
+            <span className='time-right'>TimeValueR</span>
+        </div>
+
+        <div className='Message-container'>
+            <img src='#' alt='Avatar'></img>
+            <p>container left</p>
+            <span className='time-left'>TimeValueL</span>
+        </div>
+
+        <div className='input-text'>
+            <input
+            type='text'
+            placeholder='Say hello here....'
+            value={newMessage}
+            onChange={handleInputChange}
+            />
+            <button onClick={handleSendMessage}>send</button>
+        </div>
+    </div>
+    )
+}
+
+export default Chat;
+
+
+

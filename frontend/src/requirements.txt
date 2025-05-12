@@ -1,0 +1,4 @@
+requirements 
+
+Vite reacts javascript 
+Axios for api intergation
