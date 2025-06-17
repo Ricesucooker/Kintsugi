@@ -19,16 +19,20 @@ function SendingBtn({onSendMessage}) {
 
   return (
     <form onSubmit={sendChat}>
-         <div className='input-text'>
-            <label htmlFor='prompt'> Message:</label>
+        
+          
+             <button type='sumbit'>
+             <label htmlFor='prompt'> </label>
             <textarea
             id='prompt'
             value={message}
             onChange={handleChange}
             placeholder='Enter your message to Tsuki...'
             />
-        </div>
-        <button type='sumbit'>Send</button>
+            ➤♡➤➤
+             </button>
+
+       
     </form>
   );
 }

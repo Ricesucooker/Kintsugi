@@ -2,3 +2,4 @@ requirements
 
 Vite reacts javascript 
 Axios for api intergation
+React-router-dom for nav bar

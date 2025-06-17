@@ -1,0 +1,5 @@
+Requirments for the frontend:
+
+vite @latest  
+tainwind @latest
+axios
