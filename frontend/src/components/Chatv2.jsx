@@ -1,7 +1,44 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import api from '../api'
 
 function Chatv2() {
+
+    const [chatHistory, setChatHistory]=useState([]);
+    const [newMessage, setNewMessage]=useState('');
+
+    const fetchChatHistory = async() => {
+        try{
+            const response = await api.get('/chat/get');
+            setChatHistory(response.data.history || []);
+        }catch(error){
+            console.error("Errror fetching chat history", error);
+        }
+    };
+
+    const handleSendMessage = async(userPrompt) =>{
+        try{
+            const response = await api.post('chat/post',{prompt : userPrompt});
+            setChatHistory(response.data.history || []);
+        }catch(error){
+            console.error("error sending message", error)
+        }
+    };
+
+    useEffect(() => {
+        fetchChatHistory();
+    },[]);
+
+    const handleChange = (event) =>{
+        setNewMessage(event.target.value);
+    };
+
+    const sendChat = (event) =>{
+        event.preventDefault();
+        if(MessageEvent.trim()){
+            onSendMessage(message);
+            setNewMessage('');
+        };
+    };
 
   return (
     <div className='w-screen h-screen flex flex-col justify-center '>
@@ -16,14 +53,41 @@ function Chatv2() {
                <div className=' group'>Help me with reason 2</div>
                <div className=' group'>Help me with reason 3</div>
             </div>
-            <div className='bg-white h-28 rounded-2xl shadow-md border border-neutral-200 relative'>
+
+            <div className='w-full mb-5 text-m'>
+
+                {chatHistory.map((message ) =>(
+                    <div className={`message-container ${message.role === 'user'? 'user': 'model'}`}>
+                        <div className={`avatar-container ${message.role === 'user'? 'user':'model'}`}>
+                        </div>
+                        {Array.isArray(message.parts) ? newMessage.parts.join(' '):message.part}
+                    </div>
+                ))}
+            </div>
+
+        <div className='bg-white h-28 rounded-2xl shadow-md border border-neutral-200 relative'>
+            
             <div className='flex'>
-                <textarea className='m-4 w-full' placeholder='Type out your thoughts here'>
-                </textarea>            
+                <form onSubmit={sendChat}>
+                <label htmlFor='prmpt'></label>
+                <textarea
+                className='w-full'
+                id='prompt'
+                value={newMessage}
+                onChange={handleChange}
+                onSendMessage={handleSendMessage}
+                placeholder='Lets talk...'>
+                </textarea>
+                </form>
                 </div>
-               <div className='flex items-center absolute right-2 bottom-2'> 
-                icons
-               </div>
+            <div className='flex items-center absolute right-2 bottom-2'> 
+                <button
+                type='submit'
+                onClick={sendChat}
+                className='px-2 py-2 bg-blue-500 text-white rounded-md'>
+                    send
+                </button>
+            </div>
             </div>
         </div>
 
