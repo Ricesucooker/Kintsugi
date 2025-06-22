@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+
 .navbar{
     align-items: center;
     background-color: white;

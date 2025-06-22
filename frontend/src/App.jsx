@@ -1,8 +1,6 @@
 import {Route, Routes} from 'react-router-dom'
-import './style/App.css'
-import Navbar from './components/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
-import Chat from './pages/Chat/Chat.jsx'
+import ChatTsuki from './pages/Chat/ChatTsuki.jsx'
 import Feedback from './pages/Feedback/Feedback.jsx'
 
 function App() {
@@ -11,7 +9,7 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<Home />}/>
-      <Route path='/Chat' element={<Chat />}/>
+      <Route path='/Chat' element={<ChatTsuki />}/>
       <Route path='/Feedback' element={<Feedback />}/>
     </Routes>
     </>

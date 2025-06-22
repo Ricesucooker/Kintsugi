@@ -1,11 +1,11 @@
+@import "tailwindcss";
+
 .chat-container{
     border: 2px solid green;
     background-color: gray;
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
-    width: 500px;
-    height: 650px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -35,22 +35,18 @@
 }
 
 .message-container.user{
-    border: 2px solid red;
     float: right;
     width: 450px;
 
 }
 
 .message-container.model{
-    border: 2px solid blue;
     float: left;
     width: 450px;
 }
 
 .sendBtn{
     width: 500px;
-    border: 2px solid purple;
-    position: absolute;
     bottom: 0;
     margin: 0;
     padding: 0;
