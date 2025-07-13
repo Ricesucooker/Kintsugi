@@ -18,13 +18,24 @@ function Chatv2() {
     const handleSendMessage = async(userPrompt) =>{
         if (!userPrompt.trim()) return;
 
+        setChatHistory(prevHistory => [...prevHistory,{role: 'user', parts:[userPrompt]}]);
+        setNewMessage('');
+        
         try{
-            setChatHistory(prevHistory => [...prevHistory,{role: 'user', parts:[userPrompt]}]);
-            setNewMessage('')
 
             const response = await api.post('chat/post',{prompt : userPrompt});
-            setChatHistory(response.data.history || []);
 
+            const agentTsukiContent = response.data.reply || response.data.message || response.data.text;
+
+            if (agentTsukiContent && typeof agentTsukiContent === 'string'){
+                setChatHistory(prevHistory => {
+                    return[
+                        ...prevHistory,{role:'model', parts:[agentTsukiContent]}
+                    ];
+                });
+            }else{
+                console.warn("Tsuki response conet no found in expected format:", response.data);
+            }
         }catch(error){
             console.error("error sending message", error)
         }
@@ -61,14 +72,13 @@ function Chatv2() {
 
             <div className='w-full mb-5 text-m'>
 
-                {chatHistory.map((message) =>(
+                {chatHistory.map((message, index) => (
 
-                    <div className={`message-container ${message.role === 'user'? 'user': 'model'}`}>
-                        <div className={`avatar-container ${message.role === 'user'? 'user':'model'}`}>
-                        </div>
-                        {Array.isArray(message.parts) ? newMessage.parts.join(' '):message.part}
+                    <div key={index} className={`message-container ${message.role === 'user'? 'user': 'model'}`}>
+                        <div className={`avatar-container ${message.role === 'user'? 'user':'model'}`}></div>
+                        {Array.isArray(message.parts) ? message.parts.join(' '):message.part}
                     </div>
-                    
+
                 ))}
             </div>
 
@@ -76,7 +86,7 @@ function Chatv2() {
             <form onSubmit={sendChat} className=' flex flex-col h-full'>
                 <label htmlFor='prompt' className='sr-only'>Enter Your Message</label>
                 <textarea
-                    className='w-full flex-grow border-non focous:outline-non reize-none p-2'
+                    className='w-full flex-grow border-none focous:outline-none resize-none p-2'
                     id='prompt'
                     value={newMessage}
                     onChange={handleChange}
@@ -86,7 +96,7 @@ function Chatv2() {
                 <div className='flex item-center justify-end mt-2'>
                     <button
                         type='submit'
-                        className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bgblue-600 focous:ring-2 focous:ring-blue-500 focus:ring-opaacity-50'
+                        className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:ring-2 focous:ring-blue-500 focus:ring-opacity-50'
                         >
                             Send
                         </button>
