@@ -15,6 +15,9 @@ function Navbar() {
                 <li>
                     <Link to="/Chat">Chat</Link>
                 </li>
+                 <li>
+                    <Link to="/TalkV1">v1Chat</Link>
+                </li>
                 <li>
                     <Link to="/Feedback">Feedback</Link>
                 </li>

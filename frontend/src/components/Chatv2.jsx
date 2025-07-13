@@ -3,8 +3,8 @@ import api from '../api'
 
 function Chatv2() {
 
-    const [chatHistory, setChatHistory]=useState([]);
-    const [newMessage, setNewMessage]=useState('');
+    const [chatHistory, setChatHistory] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
 
     const fetchChatHistory = async() => {
         try{
@@ -16,9 +16,15 @@ function Chatv2() {
     };
 
     const handleSendMessage = async(userPrompt) =>{
+        if (!userPrompt.trim()) return;
+
         try{
+            setChatHistory(prevHistory => [...prevHistory,{role: 'user', parts:[userPrompt]}]);
+            setNewMessage('')
+
             const response = await api.post('chat/post',{prompt : userPrompt});
             setChatHistory(response.data.history || []);
+
         }catch(error){
             console.error("error sending message", error)
         }
@@ -34,9 +40,8 @@ function Chatv2() {
 
     const sendChat = (event) =>{
         event.preventDefault();
-        if(MessageEvent.trim()){
-            onSendMessage(message);
-            setNewMessage('');
+        if(newMessage.trim()){
+            handleSendMessage(newMessage);
         };
     };
 
@@ -56,41 +61,41 @@ function Chatv2() {
 
             <div className='w-full mb-5 text-m'>
 
-                {chatHistory.map((message ) =>(
+                {chatHistory.map((message) =>(
+
                     <div className={`message-container ${message.role === 'user'? 'user': 'model'}`}>
                         <div className={`avatar-container ${message.role === 'user'? 'user':'model'}`}>
                         </div>
                         {Array.isArray(message.parts) ? newMessage.parts.join(' '):message.part}
                     </div>
+                    
                 ))}
             </div>
 
         <div className='bg-white h-28 rounded-2xl shadow-md border border-neutral-200 relative'>
-            
-            <div className='flex'>
-                <form onSubmit={sendChat}>
-                <label htmlFor='prmpt'></label>
+            <form onSubmit={sendChat} className=' flex flex-col h-full'>
+                <label htmlFor='prompt' className='sr-only'>Enter Your Message</label>
                 <textarea
-                className='w-full'
-                id='prompt'
-                value={newMessage}
-                onChange={handleChange}
-                onSendMessage={handleSendMessage}
-                placeholder='Lets talk...'>
+                    className='w-full flex-grow border-non focous:outline-non reize-none p-2'
+                    id='prompt'
+                    value={newMessage}
+                    onChange={handleChange}
+                    placeholder="Let's talk.."
+                    rows='2'>
                 </textarea>
-                </form>
+                <div className='flex item-center justify-end mt-2'>
+                    <button
+                        type='submit'
+                        className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bgblue-600 focous:ring-2 focous:ring-blue-500 focus:ring-opaacity-50'
+                        >
+                            Send
+                        </button>
+
                 </div>
-            <div className='flex items-center absolute right-2 bottom-2'> 
-                <button
-                type='submit'
-                onClick={sendChat}
-                className='px-2 py-2 bg-blue-500 text-white rounded-md'>
-                    send
-                </button>
-            </div>
-            </div>
+            </form>
         </div>
 
+    </div>
     </div>
   )
 }
