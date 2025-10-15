@@ -87,7 +87,7 @@ async def chat_get(prompt: str = Query(..., description="Messsage Tsuki!")):
     except HTTPException as e:
         raise e
     except Exception as e: 
-        raise HTTPEception(status_code=500, detail=f"An unexpected error occurred: {e}")
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {e}")
 
 if __name__=="__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

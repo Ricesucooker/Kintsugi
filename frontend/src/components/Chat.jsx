@@ -43,14 +43,11 @@ function Chat() {
 
     return (
         <div>
-            <p>Hello world</p>
-
             <div className='chat-container'>
                 {chatHistory.map((msg, index) => ( 
                     <div
                         key={index}
-                        className={`Message-Container ${msg.role === 'user' ? 'user' : 'model'}`}
-                    >
+                        className={`Message-Container ${msg.role === 'user' ? 'user' : 'model'}`}>
                         <img src='#' alt='Avatar' />
                         <p>{Array.isArray(msg.parts) ? msg.parts.join(' ') : msg.part}</p>
                         <span className={`time-${msg.role === 'user' ? 'right' : 'left'}`}>
