@@ -30,6 +30,11 @@ var myNote = []Note{
 		NoteTitle: "New Notes",
 		NoteBody:  "Head empty!",
 	},
+	{
+		NoteID:    "3",
+		NoteTitle: "Very New Note3",
+		NoteBody:  " Thisis a note body just some random long string of texts",
+	},
 }
 
 var myReply = []Reply{
