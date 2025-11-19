@@ -3,18 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Approute from './Approute';
 
 
-export const BaseURI="http://localhost:8000/api/v1" 
+
 
 function App() {
 
-  const {data} = useQuery({
-
-    queryKey:[ 'mynotes' ],
-    queryFn: getMynotes});
-
-
-
-  const noteList = data || [];
 
 
   return (
@@ -37,10 +29,7 @@ function App() {
   )
 }
 
-const getMynotes = async () =>{
-  const response = await fetch(`${BaseURI}/mynote`)
-  return await response.json()
-}
+
 
 
 export default App

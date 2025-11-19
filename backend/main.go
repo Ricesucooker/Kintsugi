@@ -15,6 +15,7 @@ type Note struct {
 
 type Reply struct {
 	ReplyID   string `json:"replyid"`
+	NoteID    string `json:"noteid"`
 	ReplyBody string `json:"replybody"`
 }
 
@@ -33,21 +34,24 @@ var myNote = []Note{
 	{
 		NoteID:    "3",
 		NoteTitle: "Very New Note3",
-		NoteBody:  " Thisis a note body just some random long string of texts",
+		NoteBody:  " This is a note body just some random long string of texts",
 	},
 }
 
 var myReply = []Reply{
 	{
 		ReplyID:   "1",
+		NoteID:    "1",
 		ReplyBody: "hello world, i am a reply",
 	},
 	{
 		ReplyID:   "2",
+		NoteID:    "1",
 		ReplyBody: "be good to me",
 	},
 	{
 		ReplyID:   "3",
+		NoteID:    "3",
 		ReplyBody: "this might be a bug",
 	},
 }
@@ -83,6 +87,20 @@ func getReplyID(c *gin.Context) {
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no reply found"})
 }
 
+func GetReplyNoteid(c *gin.Context) {
+
+	noteid := c.Param("noteid")
+
+	var matchingReplies []Reply
+
+	for _, reply := range myReply {
+		if reply.NoteID == noteid {
+			matchingReplies = append(matchingReplies, reply)
+		}
+	}
+	c.IndentedJSON(http.StatusOK, matchingReplies)
+}
+
 //middleware
 
 func CORS() gin.HandlerFunc {
@@ -110,6 +128,7 @@ func main() {
 	router.GET("api/v1/mynote", getNotes)
 	router.GET("api/v1/mynote/:noteid", getNotesbyID)
 	router.GET("api/v1/reply/:replyid", getReplyID)
+	router.GET("api/v1/replies/:noteid", GetReplyNoteid)
 
 	router.GET("api/v1/Hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

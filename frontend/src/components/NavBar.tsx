@@ -10,7 +10,7 @@ function NavBar() {
         <p className=''> Website Logo</p>
         <ul className='flex gap-4 '>
             <li className=''><NavLink to='/'>Home</NavLink></li>
-            <li><NavLink to='Notes'>Notes</NavLink></li>
+            <li><NavLink to='/notes'>Notes</NavLink></li>
             <li>Chat with Tsuki</li>
             <li>Feedback</li>
             
